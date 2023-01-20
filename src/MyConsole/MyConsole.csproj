@@ -9,4 +9,8 @@
     <PackageReference Include="FFMpegCore" Version="4.7.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="files/**" CopyToOutputDirectory="Always" />
+  </ItemGroup>
+
 </Project>
