@@ -24,7 +24,7 @@ namespace MyConsole
                     .Seek(TimeSpan.FromSeconds(10))
                     .WithDuration(TimeSpan.FromSeconds(30))
                     .WithFramerate(30)
-                    .Resize(1920, 1080)
+                    .Resize(500, 500)
                     .WithVideoCodec(VideoCodec.LibVpx)
                     .WithConstantRateFactor(30)
                     .WithVideoBitrate(4500)
@@ -32,6 +32,21 @@ namespace MyConsole
                 ).ProcessAsynchronously();
 
             Console.WriteLine($"Convert Success?: {success}");
+        }
+
+        static async Task ResizeImage()
+        {
+            var basePath = GetRootDirectory();
+            var inputFilePath = Path.Combine(basePath, "files", "background.jpg");
+            var outputFilePath = Path.Combine(basePath, "files", "resize_background.jpg");
+
+            var success = await FFMpegArguments
+                .FromFileInput(inputFilePath)
+                .OutputToFile(outputFilePath, true, a => a
+                    .Resize(500, 500)
+                ).ProcessAsynchronously();
+
+            Console.WriteLine($"Resize Success?: {success}");
         }
 
         static async Task GetThunbnailFileAsync()
@@ -54,7 +69,8 @@ namespace MyConsole
         {
             // await GetThunbnailFileAsync();
 
-            await ConvertVideoToWebMFile();
+            // await ConvertVideoToWebMFile();
+            await ResizeImage();
         }
     }
 }
